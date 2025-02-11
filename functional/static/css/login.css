@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #F5F5F5;
+    background:  linear-gradient(rgba(255, 255, 255, 0.3), rgba(100, 100, 100, 0.3)),url("/static/images/bg.jpg");
+    background-size: Contain;
+    background-repeat: no-repeat;
+}
+
+.login-container {
+    background-color: #1E1E1E;
+    padding: 65px 20px; /* Increased padding */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    opacity: 0.95;
+    position: relative;
+}
+
+.logo {
+    width: 70px;
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: white;
+    
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group input {
+    width: 80%;
+    padding: 7px;
+    border: 2px solid #2D8636;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    background-color: #D9D9D9;
+    color: #1E1E1E;
+}
+
+.login-btn {
+    width: 40%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    margin: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #2D8636;
+    color: rgb(255, 255, 255);
+}
+
+.login-btn:hover {
+    background-color: #2980b9;
+}
+
+
+.custom-alert {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d2f0cf;
+    color: #000000;
+    padding: 20px;
+    border: 1px solid #333232;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.custom-alert button {
+    background-color: #2e9136;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+

@@ -1,0 +1,105 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="container">
+            <center>
+                <div class="table-wrapper">
+                    <h2 style="color: black;"><strong>Officials Archived</strong></h2>
+                    <h4>Archived List</h4>
+                    <a href="officiallist" class="previous">&laquo;  Back</a>
+                    <div class="add-button">
+                </div>
+                    <div class="search-container">
+                        <input type="text" class="arc-search-bar" id="searchInput" placeholder="Search for position..." onkeyup="searchPosition()">
+                      <!--  <button class="arc-button" onclick="searchPosition()">🔍 Search</button> -->
+                    </div>
+                    <table class="fl-table">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Chapter Survived</th>
+                                <th>Date Survived</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="officialsTableBody">
+                            {% for arc in arc %}
+                            <tr>
+                                <td>{{arc[1]}}</td>
+                                <td>{{arc[2]}}</td>
+                                <td>{{arc[3]}}</td>
+                                <td>{{arc[4]}}</td>
+                                <td>{{arc[5]}}</td>
+                                <td>{{arc[6]}}</td>
+                                <td>
+                                    <a href="#" class = "arc-button" STYLE="color:red;" onclick="confirmDelete('{{ arc[0] }}')"> 🗑 Delete </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <script>
+
+        function confirmDelete(memberId) {
+            var confirmation = confirm("Are you sure you want to delete this Official?");
+            if (confirmation) {
+                window.location.href = "/delete_arc/" + memberId;
+            }
+        }
+
+        function searchPosition() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("officialsTableBody");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Adjusted to target the position column (index 2)
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        
+                        // Highlighting logic
+                        var highlightedText = txtValue.replace(new RegExp(filter, 'gi'), match => `<span class="highlight">${match}</span>`);
+                        td.innerHTML = highlightedText;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+            updateTotalOfficials();
+        }
+    
+        function updateTotalOfficials() {
+            var totalOfficials = document.getElementById("officialsTableBody").getElementsByTagName("tr").length;
+            document.getElementById("totalOfficials").innerText = totalOfficials;
+        }
+    
+        // Initially update total officials count
+        updateTotalOfficials();
+    </script>
+</body>
+</html>

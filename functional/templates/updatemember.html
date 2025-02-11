@@ -1,0 +1,86 @@
+{% include 'header.html' %}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <script>
+        function confirmSubmit() {
+            if (confirm("Are you sure you want to update this form?")) {
+                alert("Successfully Updated!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+
+<body>
+  <div class="container">        
+      {% include 'left_menus.html' %}   
+    <div class="container">
+        <h1 style="color: #1E1E1E;"> Update Member Profile</h1>
+        <form form action="/update_process_member" method="POST" style="max-width: 600px; margin: auto;"
+        onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" value="{{row[0]}}" name="report_id" id="report_id" placeholder="id">
+            </div>
+
+            <div class="form-group">
+                <label for="name">First Name:</label>
+                <input  value="{{row[1]}}" type="text" name="fname" id="fname" placeholder="First Name" required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Last Name:</label>
+                <input value="{{row[2]}}" type="text" name="lname" id="lname" placeholder="Last Name" required style="width: 100%; padding: 10px;">
+            </div>
+
+            <center>
+                <label for="gender">Gender</label>
+                <select value="{{row[3]}}" style="width: 100%; padding: 5px;" id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    </select>
+                </center>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input value="{{row[4]}}" type="email" id="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input value="{{row[5]}}" type="number" id="phone" name="phone" placeholder="Enter Phone Number" required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Date Joined:</label>
+                <input value="{{row[6]}}" type = "date" id="datejoin" name="datejoin"  rows="4" required style="width: 100%; padding: 10px;"></textarea>
+            </div>
+
+            <center>
+                <label  for="gender">Status</label>
+                <select  value="{{row[7]}}"style="width: 100%; padding: 5px;" id="status" name="status">
+                    <option value="Active">Active</option>
+                    <option value = "Inactive">Inactive</option>
+                    
+                    </select>
+                </center>
+
+                <div class="form-group">
+                    <label for="comments">Chapter:</label>
+                    <input value="{{row[8]}}" type = "text" id="chapter" name="chapter"   required style="width: 100%; padding: 10px;"></input>
+                </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 10px;">Update</button>
+                <a href="/memberlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+{% include 'header.html' %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link rel="website icon" type="png" href="static/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="container">
+            <center>
+                <div class="table-wrapper">
+                    <h2 style="color: black;"><strong>Agusan del Norte Chapters</strong></h2>
+
+                    <div class="chapter-add-button">
+                        <p><a  href="/chaparc" class="chaparc-button">📄 List</a></p>
+                        <p><a  class="chaparc-button" onclick="openAddChapterModal()"> + Chapter</a></p>
+                        <p><a onclick="archiveSelectedChapters()" class="chaparc-button">➚ Archive</a></p>
+                    </div>
+
+                    <div class="search-container">
+                        <input type="text" class="chaptersearch-bar" id="searchInput" placeholder="Search for chapter..."
+                            onkeyup="searchChapter()">
+                    <!--   <button class="arc-button" onclick="searchChapter()">🔍 Search</button> -->
+                    </div>
+                    <div class="chapter-container">
+                        {% for chap in chap %}
+                        <div class="chapter-widget">
+                            <input type="checkbox" style="margin-right: 10px;" class="chapter-checkbox"
+                                value="{{ chap[0] }}">
+                            <center>
+                            <!--   <img src="/static/images/logo.png" class="chapter-cover" alt="Chapter Cover"> --> 
+                            </center>
+                            <p class="chapter-name">{{ chap[1] }}</p>
+                            <div class="chapter-info">
+                                <p><strong>Chapter President:</strong> {{ chap[2] }}</p>
+                                
+                                <p><strong>Place:</strong> {{ chap[3] }}</p>
+                                <p><strong>Date Created:</strong> {{ chap[4] }}</p>
+                                <div>
+                                    
+
+                                    <script type="text/javascript">
+                                        function showAlert(message) {
+                                            Swal.fire({
+                                                title: 'Success!',
+                                                text: message,
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        }
+                                    </script>
+
+                                    <p><strong>Send an SMS</strong></p>
+                                    <form action="/update_process_chapter" class="form" method="POST">
+                                        
+                                        <label for="to"> </label>
+                                        <input type="text" id="to" name="to"  style="width: 240px;" placeholder="Enter Cellphone Number" required>
+                                        <br><br>
+                                        <label for="body">Message:</label>
+                                        <textarea style="width: 245px;" id="body" name="body" required></textarea>
+                                         <br><br>
+                                         <button type="submit" class="notify-button">Notify</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                {% if success %}
+                <script type="text/javascript">
+                    showAlert('Message sent! SID: {{ message_sid }}');
+                </script>
+                {% endif %}
+
+    <div id="addChapterModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddChapterModal()">&times;</span>
+            <header>New Chapter</header>
+        <form action="chapter_process" class="form" method="POST" style="max-width: 600px; margin: auto;"
+              onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" name="chapter_id" id="chapter_id" placeholder="id">
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="name">Chapter:</label>
+                    <input type="text" name="chapter" id="chapter"  required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="pres">Chapter President:</label>
+                    <input type="text" name="pres" id="pres"  required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="datesurvived">Date Created:</label>
+                    <input type="date" id="datecreated" name="datecreated"  required style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Place:</label>
+                <input type="text" name="place" id="place"  required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 5px;">Submit</button>
+                <a href="/chapterlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+        </div>
+    </div>
+</center>
+</div>
+</div>
+</body>
+    <script>
+
+function openAddChapterModal() {
+            var modal = document.getElementById("addChapterModal");
+            modal.style.display = "block";
+        }
+
+        function closeAddChapterModal() {
+            var modal = document.getElementById("addChapterModal");
+            modal.style.display = "none";
+        }
+
+        function archiveSelectedChapters() {
+            // Your existing archiveSelectedChapters function goes here
+        }
+
+        function searchChapter() {
+            // Your existing searchChapter function goes here
+        }
+
+        function archiveSelectedChapters() {
+            var checkboxes = document.querySelectorAll('.chapter-checkbox:checked');
+            if (checkboxes.length > 0) {
+                var confirmAction = confirm("Are you sure you want to archive the selected chapters?");
+                if (confirmAction) {
+                    checkboxes.forEach(function(checkbox) {
+                        var chapterId = checkbox.value;
+                        // Send an AJAX request to the backend route to archive the chapter
+                        var xhr = new XMLHttpRequest();
+                        window.location.href = "/delete_chap/" + chapterId;
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                // If the chapter is successfully archived on the server,
+                                // remove it from the view
+                                checkbox.closest('.chapter-widget').remove();
+                            } else {
+                                // Handle error cases
+                                console.error('Error archiving chapter:', xhr.statusText);
+                                alert('Error archiving chapter. Please try again later.');
+                            }
+                        };
+                        xhr.send();
+                    });
+                }
+            } else {
+                alert("Please select at least one chapter to archive.");
+            }
+        }
+
+        function searchChapter() {
+            var input, filter, chapters, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            chapters = document.getElementsByClassName("chapter-widget");
+            for (i = 0; i < chapters.length; i++) {
+                var chapterName = chapters[i].getElementsByClassName("chapter-name")[0];
+                txtValue = chapterName.textContent || chapterName.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    chapters[i].style.display = "";
+                    
+                    // Highlighting logic
+                    var highlightedText = txtValue.replace(new RegExp(filter, 'gi'), match => `<span class="highlight">${match}</span>`);
+                    chapterName.innerHTML = highlightedText;
+                } else {
+                    chapters[i].style.display = "none";
+                }
+            }
+            updateTotalChapters();
+        }
+        
+
+        function updateTotalChapters() {
+            var totalChapters = document.getElementsByClassName("chapter-widget").length;
+            document.getElementById("totalChapters").innerText = totalChapters;
+        }
+    </script>
+
+
+</html>

@@ -1,0 +1,51 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <script>
+        function submitForm() {
+            if (confirm("Are you sure you want to submit this form?")) {
+                alert("Admin successfully added!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+  <div class="container">        
+      {% include 'left_menus.html' %}   
+    <div class="container">
+        <h1 style="color: #1E1E1E;"> Add New Admin</h1>
+        <form form action="admin_process" method="POST" style="max-width: 600px; margin: auto;" onsubmit="return submitForm();">
+            <div class="form-group">
+                <input type="hidden" name="admin_id" id="admin_id" placeholder="id">
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username"  required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password"  required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 10px;">Submit</button>
+                <a href="/adminlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

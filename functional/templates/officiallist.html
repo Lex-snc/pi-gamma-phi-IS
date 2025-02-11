@@ -1,0 +1,223 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="container">
+            <center>
+                <div class="table-wrapper">
+                    <h2 style="color: black;"><strong>Officials</strong></h2>
+                    <div class="add-button">
+                    <!-- Add Official Button -->
+                    <button class="arc-button" onclick="openModal()">+ Official</button>
+
+
+                    <a class = "arc-button" href="/archive">📄 Archived</a>
+                </div>
+                    <div class="search-container">
+                        <input type="text" class="off-search-bar" id="searchInput" placeholder="Search for position..." onkeyup="searchPosition()">
+                 <!--     <button class = "arc-button" onclick="searchPosition()">🔍 Search</button> -->
+                    </div>
+                    <div class="table-wrapper2">
+                        <div class="f1-table-wrapper">
+                            <table class="fl-table">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Chapter Survived</th>
+                                <th>Date Survived</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="officialsTableBody">
+                            {% for off in off %}
+                            <tr>
+                                <td>{{off[1]}}</td>
+                                <td>{{off[2]}}</td>
+                                <td>{{off[3]}}</td>
+                                <td>{{off[4]}}</td>
+                                <td>{{off[5]}}</td>
+                                <td>{{off[6]}}</td>
+                                <td>
+                                    <a href="#" class = "action-button" STYLE="color:blue;"onclick="archiveOrDelete({{ off[0] }} , 'delete')">➚ Archive </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
+
+    <!-- Modal Structure -->
+<div id="addOfficialModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <header>Add New Official</header>
+        <form action="official_process" class="form" method="POST" style="max-width: 600px; margin: auto;"
+              onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" name="official_id" id="official_id" placeholder="id">
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="name">First Name:</label>
+                    <input type="text" name="fname" id="fname" placeholder="First Name" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Last Name:</label>
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" required style="width: 100%; padding: 10px;">
+                </div>
+            
+
+            <div class="form-group">
+                <label for="gender">Position</label>
+                <select style="width: 100%; padding: 5px;" id="position" name="position">
+                    <option value="president">President</option>
+                    <option value="vice president">Vice President</option>
+                    <option value="secretary">Secretary</option>
+                    <option value="treasurer">Treasurer</option>
+                    <option value="M.I">M.I</option>
+                    <option value="PIO">PIO</option>
+                    <option value="chapter marshall">Chapter Marshall</option>
+                </select>
+            </div>
+        </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="datesurvived">Date Survived:</label>
+                    <input type="date" id="datesurvived" name="datesurvived" required style="width: 100%; padding: 10px;"></input>
+                </div>
+           
+            
+            <div class="form-group">
+                <label for="chaptersurvived">Chapter Survived:</label>
+                <input type="text" id="chaptersurvived" name="chaptersurvived" required style="width: 100%; padding: 10px;">
+            </div>
+        </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 10px;">Submit</button>
+                <a href="/officiallist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</center>
+</div>
+</div>
+</body>
+
+    <script>
+
+        // Function to open the modal
+function openModal() {
+    var modal = document.getElementById('addOfficialModal');
+    modal.style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    var modal = document.getElementById('addOfficialModal');
+    modal.style.display = 'none';
+}
+
+// Close the modal when the user clicks outside of it
+window.onclick = function(event) {
+    var modal = document.getElementById('addOfficialModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
+        function archiveOrDelete(eventId, action) {
+            if (action === 'delete') {
+                var confirmDelete = confirm("Are you sure you want to move this in Archive?");
+                if (confirmDelete) {
+                    window.location.href = "/delete_official/" + eventId;
+                }
+            }
+        }
+
+        function searchPosition() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("officialsTableBody");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Adjusted to target the position column (index 2)
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        
+                        // Highlighting logic
+                        var highlightedText = txtValue.replace(new RegExp(filter, 'gi'), match => `<span class="highlight">${match}</span>`);
+                        td.innerHTML = highlightedText;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+            updateTotalOfficials();
+        }
+        
+    
+        function updateTotalOfficials() {
+            var totalOfficials = document.getElementById("officialsTableBody").getElementsByTagName("tr").length;
+            document.getElementById("totalOfficials").innerText = totalOfficials;
+        }
+    
+        // Initially update total officials count
+        updateTotalOfficials();
+    </script>
+
+<script>
+    $(document).ready(function(){
+        $('#searchInput').on('input', function(){
+        var searchText = $(this).val().toLowerCase();
+        $('tbody tr').each(function(){
+            var found = false;
+            $(this).find('td').each(function(){
+                if ($(this).text().toLowerCase().indexOf(searchText) >= 0){
+                    found = true;
+                    return false;
+                }
+            });
+            if (found) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+        });
+       
+    });
+</script>
+
+</html>

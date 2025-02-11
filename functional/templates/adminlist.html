@@ -1,0 +1,194 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href="static/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        function showAdminList() {
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModalPIN() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function confirmPIN() {
+            var pin = document.getElementById('pinInput').value;
+            if (pin === '1234') {
+                document.getElementById('adminTable').style.display = 'block';
+                document.getElementById('viewAdminButton').style.display = 'none';
+                closeModalPIN();
+            } else {
+                alert("Incorrect PIN. Access denied.");
+            }
+        }
+
+        function confirmDelete(memberId) {
+            var confirmation = confirm("Are you sure you want to delete this Admin?");
+            if (confirmation) {
+                window.location.href = "/delete_admin/" + memberId;
+            }
+        }
+
+        function openModal() {
+            var modal = document.getElementById('addMemberModal');
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('addMemberModal');
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('addMemberModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function confirmUpdate() {
+            if (confirm("Are you sure you want to update this member profile?")) {
+                alert("Member profile updated successfully.");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function submitForm() {
+            if (confirm("Are you sure you want to submit this form?")) {
+                alert("Member successfully added!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        function openUpdateModal() {
+            var modal = document.getElementById('updateMemberModal');
+            modal.style.display = 'block';
+        }
+    
+        function closeUpdateModal() {
+            var modal = document.getElementById('updateMemberModal');
+            modal.style.display = 'none';
+        }
+
+        function openUpdateModal(admin_id, username, password) {
+            document.getElementById("update_admin_id").value = admin_id;
+            document.getElementById("update_user").value = username;
+            document.getElementById("update_password").value = password;
+            document.getElementById("updateMemberModal").style.display = "block";
+        }
+    
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="container">
+            <center>
+                <div class="table-wrapper">
+                    <p id="viewAdminButton"><a href="#" class="update-btn" onclick="showAdminList()">View Admin List</a></p>
+                    <!-- The Modal -->
+                    <div id="modal" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModalPIN()">&times;</span>
+                            <h2>Enter PIN</h2>
+                            <input type="password" id="pinInput" placeholder="Enter PIN">
+                            <button onclick="confirmPIN()">Submit</button>
+                        </div>
+                    </div>
+                    <div id="adminTable" style="display: none;">
+                        <h1 style="color: black;"><strong>Administrator</strong></h1>
+                        <p><a class="update-btn" onclick="openModal()">+ Admin</a></p>
+                        <div class="table-wrapper2">
+                        <div class="f1-table-wrapper">
+                            <table class="fl-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admin in admin %}
+                                <tr>
+                                    <td>{{admin[1]}}</td>
+                                    <td>{{admin[2]}}</td>
+                                    <td>
+                                        <a href="#" class="arc-button" style="color:red;" style="margin-right: 20px;" onclick="confirmDelete('{{ admin[0] }}')">🗑 Delete</a>
+                                        <a href="#" class="arc-button" onclick="openUpdateModal('{{ admin[0] }}', '{{ admin[1] }}', '{{ admin[2] }}')">✎ Edit</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </center>
+        </div>
+    
+        <!-- Update Member Modal -->
+        <div id="updateMemberModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeUpdateModal()">&times;</span>
+                <header>Update Member</header>
+                <form  action="/update_process_admin" class="form" method="POST" onsubmit="return confirmUpdate();" style="max-width: 600px; margin: auto;">
+                    <div class="form-group">
+                        <input type="hidden"  name="admin_id" id="update_admin_id" placeholder="id">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Username:</label>
+                        <input  type="text" name="username" id="update_user" required style="width: 100%; padding: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Password:</label>
+                        <input  type="password" name="password" id="update_password" required style="width: 100%; padding: 10px;">
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="update-btn" style="margin-top: 10px;">Update</button>
+                        <a href="/adminlist" class="submit-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Add Member Modal -->
+        <div id="addMemberModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <header>Add New Member</header>
+                <form  action="admin_process" method="POST" class="form" style="max-width: 600px; margin: auto;" onsubmit="return submitForm();">
+                    <div class="form-group">
+                        <input type="hidden" name="admin_id" id="admin_id" placeholder="id">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id="username" required style="width: 100%; padding: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" required style="width: 100%; padding: 10px;">
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="update-btn" style="margin-top: 10px;">Submit</button>
+                        <a href="/adminlist" class="submit-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div
+        

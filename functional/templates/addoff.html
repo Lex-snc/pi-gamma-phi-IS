@@ -1,0 +1,84 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <script>
+        function confirmSubmit() {
+            if (confirm("Are you sure you want to submit this form?")) {
+                alert("Official successfully added!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    {% include 'left_menus.html' %}
+    <div class="container">
+        <header>Add New Official</header>
+        <form action="official_process" class="form" method="POST" style="max-width: 600px; margin: auto;"
+              onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" name="official_id" id="official_id" placeholder="id">
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="name">First Name:</label>
+                    <input type="text" name="fname" id="fname" placeholder="First Name" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Last Name:</label>
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" required style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Position</label>
+                <select style="width: 100%; padding: 5px;" id="position" name="position">
+                    <option value="president">President</option>
+                    <option value="vice president">Vice President</option>
+                    <option value="secretary">Secretary</option>
+                    <option value="treasurer">Treasurer</option>
+                    <option value="M.I">M.I</option>
+                    <option value="PIO">PIO</option>
+                    <option value="chapter marshall">Chapter Marshall</option>
+                </select>
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="datesurvived">Date Survived:</label>
+                    <input type="date" id="datesurvived" name="datesurvived" required style="width: 100%; padding: 10px;"></input>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="chaptersurvived">Chapter Survived:</label>
+                <input type="text" id="chaptersurvived" name="chaptersurvived" required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 10px;">Submit</button>
+                <a href="/officiallist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

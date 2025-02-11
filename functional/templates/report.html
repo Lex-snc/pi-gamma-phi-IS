@@ -1,0 +1,97 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <script>
+        function submitForm() {
+            if (confirm("Are you sure you want to submit this form?")) {
+                alert("Member successfully added!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    {% include 'left_menus.html' %}
+    <div class="container">
+        <header>Add New Member</header>
+        <form action="report_process" class="form" method="POST" style="max-width: 600px; margin: auto;"
+              onsubmit="return submitForm();">
+            <div class="form-group">
+                <input type="hidden" name="report_id" id="report_id" placeholder="id">
+            </div>
+            <div class="column">
+                <div class="form-group">
+                    <label for="name">First Name:</label>
+                    <input type="text" name="fname" id="fname" placeholder="First Name" required
+                           style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Last Name:</label>
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" required
+                           style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select style="width: 100%; padding: 5px;" id="gender" name="gender">
+                        <option value="Male" style = "color:blue;">Male</option>
+                        <option value="Female" style = "color:pink;">Female</option>
+                        <option value="Other">Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select style="width: 100%; padding: 5px;" id="status" name="status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required
+                       style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="number" id="phone" name="phone" placeholder="Enter Phone Number" required
+                           style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="datejoined">Date Joined:</label>
+                    <input type="date" id="datejoin" name="datejoin" required
+                           style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="chapter">Chapter:</label>
+                <input type="text" id="chapter" name="chapter" required style="width: 100%; padding: 5px;">
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 1px;">Submit</button>
+                <a href="/memberlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

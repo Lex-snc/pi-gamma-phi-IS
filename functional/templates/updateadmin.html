@@ -1,0 +1,49 @@
+{% include 'header.html' %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <script>
+        function confirmSubmit() {
+            if (confirm("Are you sure you want to update this form?")) {
+                alert("Successfully Updated!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+  <div class="container">        
+      {% include 'left_menus.html' %}   
+    <div class="container">
+        <h1 style="color: #1E1E1E;"> Update Admin</h1>
+        <form form action="/update_process_admin" method="POST" style="max-width: 600px; margin: auto;"
+        onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" value="{{admin[0]}}" name="admin_id" id="admin_id" placeholder="id">
+            </div>
+
+            <div class="form-group">
+                <label for="name">First Name:</label>
+                <input  value="{{admin[1]}}" type="text" name="username" id="username"  required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Last Name:</label>
+                <input value="{{admin[2]}}" type="text" name="password" id="password"  required style="width: 100%; padding: 10px;">
+            </div>
+
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 10px;">Update</button>
+                <a href="/adminlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

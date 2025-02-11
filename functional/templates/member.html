@@ -1,0 +1,515 @@
+{% include 'header.html' %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="container">
+            
+            <center>
+                <div class="table-wrapper">
+                    <h2 style="color: black;"><strong>Agusan Council Chapter Members</strong></h2>
+                    
+                    <div class="add-button">
+                        <button class="arc-button" onclick="openModal()">+ Member</button>
+                    <button class = "arc-button" onclick="printTable()">🖶 Print</button>
+                    <button class = "arc-button" onclick="exportToExcel()"> ❐ Excel</button>
+                </div>
+
+                    <div class="search-container">
+                        <input type="text" class="member-search-bar" id="search-input" placeholder="Search Chapter...">
+                        
+                        <button class = "arc-button"id="search-button">🔍 Search</button>
+                        
+                    </div>
+                    <div class="table-wrapper2">
+                        <div class="f1-table-wrapper">
+                            <table class="fl-table" id="user-table">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Date Joined</th>
+                                <th>Status</th>
+                                <th>Chapter</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in row %}
+                            <tr>
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
+                                <td>{{ row[4] }}</td>
+                                <td>{{ row[5] }}</td>
+                                <td>{{ row[6] }}</td>
+                                <td>{{ row[7] }}</td>
+                                <td style="color: green;">{{ row[8] }}</td>
+                                <td> 
+                                    <a href="#" class="action-button" onclick="confirmDelete('{{ row[0] }}')" style="color: red;">🗑 Delete</a>
+                                    <a href="#" class="action-button" onclick="openUpdateModal('{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}', '{{ row[4] }}', '{{ row[5] }}', '{{ row[6] }}', '{{ row[7] }}', '{{ row[8] }}')">✎ Edit</a>
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="addMemberModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <header>Add New Member</header>
+                    <form action="report_process" class="form" method="POST" onsubmit="return submitForm();">
+                        <div class="form-group">
+                            <input type="hidden" name="report_id" id="report_id" placeholder="id">
+                        </div>
+                        <div class="column">
+                            <div class="form-group">
+                                <label for="fname">First Name:</label>
+                                <input type="text" name="fname" id="fname" placeholder="First Name" style="width: 100%; padding: 10px;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Last Name:</label>
+                                <input type="text" name="lname" id="lname" placeholder="Last Name" style="width: 100%; padding: 10px;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" style="width: 100%; padding: 5px;" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" style="width: 100%; padding: 5px;" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Your Email" style="width: 100%; padding: 10px;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input type="number" id="phone" name="phone" placeholder="Enter Phone Number" style="width: 100%; padding: 10px;" required>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group">
+                                <label for="datejoin">Date Joined:</label>
+                                <input type="date" id="datejoin" name="datejoin" style="width: 100%; padding: 10px;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="chapter">Chapter:</label>
+                                <input type="text" id="chapter" name="chapter" style="width: 100%; padding: 10px;" required>
+                            </div>
+                        </div>
+                            
+                            <div style="text-align: center;">
+                                <button type="submit" class="update-btn" style="margin-top: 1px;">Submit</button>
+                                <a href="/memberlist" class="submit-btn">Cancel</a>
+                            </div>
+                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+                   
+
+                    <div id="updateMemberModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUpdateModal()">&times;</span>
+        <header>Update Member Profile</header>
+        <form action="/update_process_member" class="form" method="POST" onsubmit="return confirmUpdate();">
+            <div class="form-group">
+            <input type="hidden" name="report_id" id="update_report_id">
+        </div>
+        <div class="column">
+            <div class="form-group">
+                <label for="update_fname">First Name:</label>
+                <input type="text" name="fname" id="update_fname" placeholder="First Name" required style="width: 100%; padding: 10px;">
+            </div>
+            
+            <div class="form-group">
+                <label for="update_lname">Last Name:</label>
+                <input type="text" name="lname" id="update_lname" placeholder="Last Name" required style="width: 100%; padding: 10px;">
+            </div>
+        
+        
+            <div class="form-group">
+                <label for="update_gender">Gender</label>
+                <select id="update_gender" name="gender" style="width: 100%; padding: 5px;">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="form-group">
+                <label for="update_email">Email:</label>
+                <input type="email" id="update_email" name="email" placeholder="Your Email" required style="width: 100%; padding: 10px;">
+            </div>
+        
+        
+            <div class="form-group">
+                <label for="update_phone">Phone Number:</label>
+                <input type="number" id="update_phone" name="phone" placeholder="Enter Phone Number" required style="width: 100%; padding: 10px;">
+            </div>
+            
+            <div class="form-group">
+                <label for="update_status">Status</label>
+                <select id="update_status" name="status" style="width: 100%; padding: 5px;">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div class="column">
+            <div class="form-group">
+                <label for="update_datejoin">Date Joined:</label>
+                <input type="date" id="update_datejoin" name="datejoin" required style="width: 100%; padding: 10px;">
+            </div>
+            
+            <div class="form-group">
+                <label for="update_chapter">Chapter:</label>
+                <input type="text" id="update_chapter" name="chapter" required style="width: 100%; padding: 10px;">
+            </div>
+        </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 1px;">Update</button>
+                <a href="/memberlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+                <!--
+                <div id="pagination-buttons">
+                    <button class="previous-button" onclick="previousPage()">Previous</button>
+                    <button class="next-button" onclick="nextPage()">Next</button>
+                </div> -->
+            
+            </center>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function submitForm() {
+        if (confirm("Are you sure you want to submit this form?")) {
+            alert("Member successfully added!");
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+</script>
+
+<script>
+
+    // Function to open the modal
+function openModal() {
+    var modal = document.getElementById('addMemberModal');
+    modal.style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    var modal = document.getElementById('addMemberModal');
+    modal.style.display = 'none';
+}
+
+// Close the modal when the user clicks outside of it
+window.onclick = function(event) {
+    var modal = document.getElementById('addMemberModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
+    function confirmDelete(memberId) {
+        var confirmation = confirm("Are you sure you want to delete this member?");
+        if (confirmation) {
+            window.location.href = "/delete_member/" + memberId;
+        }
+    }
+
+    function confirmUpdate() {
+        if (confirm("Are you sure you want to update this member profile?")) {
+            alert("Member profile updated successfully.");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function countParticipants() {
+        var table = document.getElementById('user-table');
+        var rowCount = table.rows.length - 1; // Exclude the header row
+        document.getElementById('attendance-count').innerText = 'Total Members: ' + rowCount;
+    }
+
+    // Call the count function when the page loads
+    window.addEventListener('load', countParticipants);
+
+    // Call the count function whenever the table is updated
+    var observer = new MutationObserver(countParticipants);
+    var table = document.getElementById('user-table');
+    observer.observe(table, { childList: true, subtree: true });
+
+    function printTable() {
+        var adminName = prompt("Please enter Chapter President:");
+        var print = prompt("Please enter your name:");
+
+        if (adminName === null || print === null) {
+            // Cancelled, do nothing
+        } else {
+        var printWindow = window.open('', '_blank');
+        var tableContent = '';
+    
+        tableContent += '<style>';
+        tableContent += 'body { font-family: Arial, sans-serif; }';
+        tableContent += 'table { width: 100%; border-collapse: collapse; margin-top: 20px; }';
+        tableContent += 'th, td { padding: 10px; border-bottom: 1px solid #ccc; text-align: center; }';
+        tableContent += 'th { background-color: #007BFF; color: #fff; }';
+        tableContent += '</style>';
+    
+        tableContent += '<table>';
+        tableContent += '<thead>';
+        tableContent += '<tr>';
+        tableContent += '<th>First Name</th>';
+        tableContent += '<th>Last Name</th>';
+        tableContent += '<th>Gender</th>';
+        tableContent += '<th>Email</th>';
+        tableContent += '<th>Phone Number</th>';
+        tableContent += '<th>Date Joined</th>';
+        tableContent += '<th>Status</th>';
+        tableContent += '<th>Chapter</th>';
+        tableContent += '</tr>';
+        tableContent += '</thead>';
+        tableContent += '<tbody>';
+    
+        var tableRows = document.querySelectorAll('#user-table tbody tr');
+        tableRows.forEach(function(row) {
+            if (row.style.display !== 'none') { // Include only visible rows
+                tableContent += '<tr>';
+                Array.from(row.querySelectorAll('td')).forEach(function(cell, index) {
+                    // Exclude the last cell (which contains delete and update links)
+                    if (index < row.cells.length - 1) {
+                        tableContent += '<td>' + cell.textContent + '</td>';
+                    }
+                });
+                tableContent += '</tr>';
+            }
+        });
+    
+        tableContent += '</tbody>';
+        tableContent += '</table>';
+    
+        if (printWindow) {
+            printWindow.document.write('<html><head><title>Agusan del Norte</title></head><body>');
+            printWindow.document.write('<h1 style="color: black;">Pi Gamma Phi </h1>');
+            printWindow.document.write('<p style="color: black;">Chapter President: ' + adminName + '</p>'); // Include admin name
+            printWindow.document.write('<p style="color: black;">Printed by: ' + print + '</p>');
+            printWindow.document.write(tableContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        } else {
+            alert('Popup blocked. Please enable popups for this site to print.');
+        }
+    }
+}
+    
+
+    function exportToExcel() {
+        var table = document.getElementById('user-table');
+        var rows = Array.from(table.querySelectorAll('tr'));
+    
+        var allData = [['First Name', 'Last Name', 'Gender', 'Email', 'Phone Number', 'Date Joined', 'Status', 'Chapter']];
+    
+        rows.forEach(function(row, index) {
+            if (index > 0 && row.style.display !== 'none') { // Include only visible rows
+                var rowData = [];
+                var cells = row.querySelectorAll('td');
+                for (var i = 0; i < cells.length - 1; i++) { // Exclude the last cell (which contains update and delete links)
+                    rowData.push(cells[i].textContent.trim());
+                }
+                allData.push(rowData);
+            }
+        });
+    
+        var allWS = XLSX.utils.aoa_to_sheet(allData);
+    
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, allWS, 'All Entries');
+        XLSX.writeFile(wb, 'PiGammaPhi-Members.xlsx');
+    }
+    
+
+    function searchTable() {
+        var searchInput = document.getElementById('search-input').value.toLowerCase();
+        var tableRows = document.querySelectorAll('#user-table tbody tr');
+    
+        tableRows.forEach(function(row) {
+            var firstNameCell = row.querySelector('td:nth-child(1)');
+            var lastNameCell = row.querySelector('td:nth-child(2)');
+            var genderCell = row.querySelector('td:nth-child(3)');
+            var emailCell = row.querySelector('td:nth-child(4)');
+            var phoneNumberCell = row.querySelector('td:nth-child(5)');
+            var dateJoinedCell = row.querySelector('td:nth-child(6)');
+            var statusCell = row.querySelector('td:nth-child(7)');
+            var chapterCell = row.querySelector('td:nth-child(8)');
+    
+            if (firstNameCell && lastNameCell && genderCell && emailCell && phoneNumberCell && dateJoinedCell && statusCell && chapterCell) {
+                var firstName = firstNameCell.textContent.toLowerCase().trim();
+                var lastName = lastNameCell.textContent.toLowerCase().trim();
+                var gender = genderCell.textContent.toLowerCase().trim();
+                var email = emailCell.textContent.toLowerCase().trim();
+                var phoneNumber = phoneNumberCell.textContent.toLowerCase().trim();
+                var dateJoined = dateJoinedCell.textContent.toLowerCase().trim();
+                var status = statusCell.textContent.toLowerCase().trim();
+                var chapter = chapterCell.textContent.toLowerCase().trim();
+    
+                // Check if search input is empty
+                if (searchInput === '') {
+                    row.style.display = ''; // Show all rows
+                } else {
+                    // Check for exact matches
+                    if (
+                        firstName === searchInput ||
+                        lastName === searchInput ||
+                        gender === searchInput ||
+                        email === searchInput ||
+                        phoneNumber === searchInput ||
+                        dateJoined === searchInput ||
+                        status === searchInput ||
+                        chapter === searchInput
+                    ) {
+                        row.style.display = ''; // Show matching rows
+                    } else {
+                        row.style.display = 'none'; // Hide non-matching rows
+                    }
+                }
+            } else {
+                console.log('Cells not found for the row:', row);
+            }
+        });
+    }
+    var searchButton = document.getElementById('search-button');
+    searchButton.addEventListener('click', searchTable);
+
+
+    function openUpdateModal(id, fname, lname, gender, email, phone, datejoin, status, chapter) {
+        document.getElementById("update_report_id").value = id;
+        document.getElementById("update_fname").value = fname;
+        document.getElementById("update_lname").value = lname;
+        document.getElementById("update_gender").value = gender;
+        document.getElementById("update_email").value = email;
+        document.getElementById("update_phone").value = phone;
+        document.getElementById("update_datejoin").value = datejoin;
+        document.getElementById("update_status").value = status;
+        document.getElementById("update_chapter").value = chapter;
+        document.getElementById("updateMemberModal").style.display = "block";
+    }
+
+    function closeUpdateModal() {
+        document.getElementById("updateMemberModal").style.display = "none";
+    }
+</script>
+/*
+
+    var currentPage = 0;
+    var rowsPerPage = 4;
+
+    function showRowsForPage() {
+        var startIndex = currentPage * rowsPerPage;
+        var endIndex = startIndex + rowsPerPage;
+        var rows = document.querySelectorAll('#user-table tbody tr');
+
+        rows.forEach(function(row, index) {
+            if (index >= startIndex && index < endIndex) {
+                row.style.display = ''; // Show rows for current page
+            } else {
+                row.style.display = 'none'; // Hide rows for other pages
+            }
+        });
+    }
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            showRowsForPage();
+        }
+    }
+
+    function nextPage() {
+        var totalRows = document.querySelectorAll('#user-table tbody tr').length;
+        var totalPages = Math.ceil(totalRows / rowsPerPage);
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            showRowsForPage();
+        }
+    }
+
+    // Call showRowsForPage function when the page loads
+    window.addEventListener('load', function() {
+        showRowsForPage();
+    });
+
+    // Function to update pagination numbers
+    function updatePaginationNumbers() {
+        var totalRows = document.querySelectorAll('#user-table tbody tr').length;
+        var totalPages = Math.ceil(totalRows / rowsPerPage);
+        var paginationNumbers = document.getElementById('pagination-numbers');
+        paginationNumbers.innerHTML = '';
+        for (var i = 0; i < totalPages; i++) {
+            var pageNumber = i + 1;
+            var pageButton = document.createElement('button');
+            pageButton.textContent = pageNumber;
+            pageButton.onclick = function() {
+                currentPage = parseInt(this.textContent) - 1;
+                showRowsForPage();
+            };
+            paginationNumbers.appendChild(pageButton);
+        }
+    }
+
+    // Call updatePaginationNumbers function when the page loads and when the table is updated
+    window.addEventListener('load', updatePaginationNumbers);
+    var observer = new MutationObserver(updatePaginationNumbers);
+    var table = document.getElementById('user-table');
+    observer.observe(table, { childList: true, subtree: true });
+    
+    
+</script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+
+</html>

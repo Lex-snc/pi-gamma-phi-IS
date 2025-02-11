@@ -1,0 +1,61 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memberlist.css') }}">
+    <script>
+        function confirmSubmit() {
+            if (confirm("Are you sure you want to submit this form?")) {
+                alert("Chapter successfully added!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    {% include 'left_menus.html' %}
+    <div class="container">
+        <h1 style="color: #1E1E1E;"> New Chapter</h1>
+        <form action="chapter_process" class="form" method="POST" style="max-width: 600px; margin: auto;"
+              onsubmit="return confirmSubmit();">
+            <div class="form-group">
+                <input type="hidden" name="chapter_id" id="chapter_id" placeholder="id">
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="name">Chapter:</label>
+                    <input type="text" name="chapter" id="chapter"  required style="width: 100%; padding: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="datesurvived">Date Created:</label>
+                    <input type="date" id="datecreated" name="datecreated"  required style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Place:</label>
+                <input type="text" name="place" id="place"  required style="width: 100%; padding: 10px;">
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="update-btn" style="margin-top: 5px;">Submit</button>
+                <a href="/chapterlist" class="submit-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

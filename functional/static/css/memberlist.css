@@ -1,0 +1,632 @@
+
+.container header{
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+}
+.container .form-group{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.highlight {
+    background-color: rgb(151, 255, 156);
+    font-weight: bold;
+}
+
+/* Wrapper for the table */
+.table-wrapper {
+    width: 80%;
+    margin: 30px auto;
+    margin-bottom: 20px;
+    margin-right: 135px;
+}
+
+.table-wrapper2 {
+    width: 100%;
+    margin: 30px auto;
+    margin-bottom: 20px;
+    margin-right: 135px;
+    
+    
+}
+
+.f1-table-wrapper {
+    width: 950px;
+    margin: 30px auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto; /* Disable horizontal scrolling */
+    max-height: 273px; /* Set a maximum height for the container */
+}
+
+.fl-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.fl-table th, .fl-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.fl-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Alternating row colors */
+.fl-table tbody tr:nth-child(even) {
+    background-color: #f3f4f6;
+}
+
+/* Hover effect on rows */
+.fl-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+
+/* Styling for buttons */
+.update-btn, .delete-btn, .notif-btn {
+    display: inline-flex; /* Using flexbox for consistent sizing */
+    align-items: center; /* Align text and icon vertically */
+    padding: 5px 12px;
+    min-width: 100px; /* Set a minimum width to ensure consistency */
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to create a gap */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+    justify-content: center; /* Center text and icon horizontally */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: 7px;
+}
+
+/* Remove margin from the last button to prevent extra space */
+
+
+.delete-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+    
+}
+
+.delete-btn:hover {
+    color: #adaaa7;
+}
+
+.update-btn {
+    color: #07860b;
+    background-color: #fff;
+    border: 1px solid #333;
+    
+    
+}
+
+.arc-button {
+    color: #07860b;
+    background-color: #fff;
+    border: 1px solid #333;
+    display: inline-flex; /* Using flexbox for consistent sizing */
+    align-items: center; /* Align text and icon vertically */
+    padding: 5px 12px;
+    min-width: 100px; /* Set a minimum width to ensure consistency */
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to create a gap */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+    justify-content: center; /* Center text and icon horizontally */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: -30px;
+    position: relative; /* Add position relative */
+    z-index: 1; /* Ensure buttons are above other content */
+    
+    
+}
+
+.notify-button {
+    color: #07860b;
+    background-color: #fff;
+    border: 1px solid #333;
+    display: inline-flex; /* Using flexbox for consistent sizing */
+    align-items: center; /* Align text and icon vertically */
+    padding: 5px 12px;
+    min-width: 100px; /* Set a minimum width to ensure consistency */
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    left: 75px; /* Add margin to create a gap */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+    justify-content: center; /* Center text and icon horizontally */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: -30px;
+    position: relative; /* Add position relative */
+    z-index: 1; /* Ensure buttons are above other content */
+}
+
+.action-button{
+    color: #07860b;
+    background-color: #fff;
+    border: 1px solid #333;
+    display: inline-flex; /* Using flexbox for consistent sizing */
+    align-items: center; /* Align text and icon vertically */
+    padding: 5px 12px;
+    min-width: 100px; /* Set a minimum width to ensure consistency */
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to create a gap */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+    justify-content: center; /* Center text and icon horizontally */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: 7px;
+}
+
+.chaparc-button {
+    color: #07860b;
+    background-color: #fff;
+    border: 1px solid #292828;
+    display: inline-flex; /* Using flexbox for consistent sizing */
+    align-items: center; /* Align text and icon vertically */
+    padding: 5px 12px;
+    min-width: 100px; /* Set a minimum width to ensure consistency */
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to create a gap */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+    justify-content: center; /* Center text and icon horizontally */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: 7px;
+    
+    
+}
+
+.chaparc-button:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);;
+    color: #1b1a1a;
+    
+}
+
+.notify-button:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);;
+    color: #1b1a1a;
+    
+}
+
+.arc-button:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);;
+    color: #3a3434;
+    
+}
+
+.action-button:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);;
+    color: #3a3434;
+    
+}
+
+.update-btn:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);;
+    color: #221e1e;
+    
+}
+
+.notif-btn {
+    background-color: #ffc107;
+    color: #000;
+    
+}
+
+.notif-btn:hover {
+    color: #adaaa7;
+}
+
+/* Styling for form group */
+.form-group label {
+    color: #333;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1.2rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.form .column {
+    display: flex;
+    column-gap: 15px;
+}
+.form :where(.gender-option, .gender){
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+}
+.form .gender{
+    column-gap: 5px;
+  
+}
+.form :where(.gender input, .gender label){
+    cursor: pointer;
+}
+.form-group textarea {
+    min-height: 100px;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#555" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%;
+    background-size: 16px;
+    padding-right: 30px;
+}
+
+/* Focus style for inputs */
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.button-container {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #f2f3f5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-container:hover {
+    background-color: #eff3f6;
+}
+
+
+.chapter-container p{
+    font-size: 13px;
+    margin: 10px auto;
+    max-width: 330px;
+}
+
+.chapter-container {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px; /* Increased gap for better spacing */
+    padding: 30px; /* Added padding to the container */
+}
+
+.chapter-info {
+    text-align: left;
+}
+
+/*.chapter-widget {
+    position: relative;
+    width: 250px;
+    height: 485px; 
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    cursor: pointer;
+    
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    
+} 
+*/
+
+.chapter-widget {
+    position: relative;
+    width: 270px;
+    height: 430px; /* Fixed height for consistency */
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8); /* Set the background color with opacity */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+    overflow: hidden; /* Ensure the blur effect doesn't overflow */
+}
+
+.chapter-widget::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/images/logo.png');
+    background-size: cover; /* Cover will make the image cover the entire container */
+    background-position: center; /* Center the image */
+    filter: blur(1px); /* Apply a blur effect to the background image */
+    z-index: -1; /* Ensure the blur effect is behind the content */
+}
+
+.chapter-widget h2,
+.chapter-widget p {
+    position: relative; /* Ensure text remains on top of the background */
+    color: #000000; /* Set text color */
+    font-weight: bold; /* Make text bold */
+}
+
+
+
+
+
+.chapter-cover {
+    width: 60px;
+    border-radius: 50%;
+}
+
+
+
+.chapter-widget .chapter-name {
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 20px;
+
+}
+
+
+.search-bar {
+    width: 100%;
+    max-width: 170px; /* Adjust maximum width as needed */
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    margin-left: 65%;
+    top: 10%
+    ;
+
+    
+}
+
+.member-search-bar {
+    width: 100%;
+    max-width: 170px; /* Adjust maximum width as needed */
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    margin-left: 68.9%;
+    top: 10%
+    ;
+
+    
+}
+
+.off-search-bar {
+    width: 100%;
+    max-width: 170px; /* Adjust maximum width as needed */
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    margin-left: 85%;
+    top: 10%
+    ;
+
+    
+}
+
+.arc-search-bar {
+    width: 100%;
+    max-width: 170px; /* Adjust maximum width as needed */
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    margin-left: 80%;
+    top: 10%
+    ;
+
+    
+}
+
+.chaptersearch-bar {
+    width: 100%;
+    max-width: 170px; /* Adjust maximum width as needed */
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    position: absolute; /* Set position to absolute */
+    top: 220px; /* Adjust top position as needed */
+    right: 135px; /* Adjust right position as needed */
+}
+
+
+.chaptersearch-bar:focus {
+    outline: none;
+    border-color: #4CAF50; /* Change border color on focus */
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #4CAF50; /* Change border color on focus */
+}
+
+/* Style for search button */
+.search-btn {
+    background-color: #ffffff;
+    color: #3f3636;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 13px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+    border: 1px solid #333;
+}
+
+.add-button {
+    margin-right: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+    
+    
+}
+
+.chapter-add-button {
+    display: flex;
+    justify-content: flex-start; /* Aligns content to the left */
+    margin-top: 70px;
+    margin-left: 33px; /* Ensure no left margin */
+    margin-right: 0; /* Ensure no right margin */
+}
+
+.search-btn:hover {
+    background-color: #c9e9c9; /* Darken button color on hover */
+}
+.search-container .button {
+    outline: none;
+}
+
+.search-container {
+    outline: none;
+}
+
+
+@media screen and (max-width: 500px) {
+    .form .column{
+        flex-wrap: wrap;
+    }
+
+    
+}
+
+.pagination-buttons {
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.previous-button {
+    background-color: #008a12;
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 7px; /* Add margin from the bottom */
+}
+.next-button {
+    margin-right: 100px;
+    background-color: #008a12;
+    color: white;
+    padding: 7px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 7px; /* Add margin from the bottom */
+}
+
+.previous-button:hover,
+.next-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 15px;
+    border: 1px solid #201f1f;
+    width: 50%; /* Set to 50% of the screen width */
+    margin-left: 450px;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.input-num {
+    outline: none;
+    margin-bottom: 5px;
+}
+
+
+
+
+

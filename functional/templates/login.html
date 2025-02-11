@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+    <title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="icon" type="image/png" href="static/images/logo.png">
+</head>
+
+<body>
+    <div class="login-container">
+        <img alt="logo" src="static/images/logo.png" class="logo" id="logo">
+        <form action="/adlogin_process" method="post" id="login-form">
+            <h4 style="color:#2D8636;">Agusan Council</h4>
+            <h1>Admin Login</h1>
+
+            <!-- Flash messages section -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div style="color:white;" class="alert alert-{{ category }}">
+                        
+                        </div>
+                    {% endfor %}
+                    <!-- Add a hidden input to pass the invalid login status to JavaScript -->
+                    <input type="hidden" id="invalid-login" value="true">
+                {% endif %}
+            {% endwith %}
+
+            <div class="form-group">
+                <label for="username"></label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <input type="submit" class="login-btn" value="Login">
+        </form>
+    </div>
+
+    <!-- Custom alert box -->
+    <div class="custom-alert" id="custom-alert">
+        <p>Incorrect username or password. Please try again.</p>
+        <button onclick="hideCustomAlert()">OK</button>
+    </div>
+
+    <script>
+        // Get reference to the logo
+        var logo = document.getElementById('logo');
+
+        // Add click event listener to the logo
+        logo.addEventListener('click', function () {
+            // Display short description
+            alert('Pi Gamma Phi (Doskelion) - Short Description');
+        });
+
+        // Function to show the custom alert
+        function showCustomAlert() {
+            var alertBox = document.getElementById('custom-alert');
+            alertBox.style.display = 'block';
+        }
+
+        // Function to hide the custom alert
+        function hideCustomAlert() {
+            var alertBox = document.getElementById('custom-alert');
+            alertBox.style.display = 'none';
+        }
+
+        // Check if the invalid login flag is set and display the custom alert if it is
+        var invalidLogin = document.getElementById('invalid-login');
+        if (invalidLogin) {
+            showCustomAlert();
+        }
+    </script>
+</body>
+
+</html>

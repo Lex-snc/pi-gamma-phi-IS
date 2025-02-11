@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+	@media (max-width: 992px) {
+		.sidenav {
+			width: 100%;
+			height: auto;
+			position: relative;
+		}
+		.content {
+			margin-left: 0; /* Adjust margin for smaller screens */
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>
+{% include 'header.html' %}
+<title>Pi Gamma Phi (Doskelion)</title>
+    <link rel="website icon" type="png" href = "static/images/logo.png">
+<body>
+
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">    			
+			<div class="alert alert-success fade in">
+			  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			  <strong><span class="ti ti-announcement fa-2x"></span> </strong> <strong>&nbsp;&nbsp;Welcome to Admin Dashboard!!</strong>.
+			</div>						
+			<div class="row"><!--row begins-->
+				<div class="col-lg-3 col-sm-6">
+					<div class="card">
+						<div class="content">
+							<div class="row">
+								<div class="col-xs-5">
+									<div class="icon-big icon-warning text-center">
+										<i class="ti-user"></i>
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<div class="numbers">
+										<p><strong>Members</strong></p>	
+										<p id="membersCount"></p>									
+									</div>
+								</div>
+							</div>
+							<a href="{{ url_for('memberlist') }}">
+								<b style = "font-size: 24px; color: green;">{{ rep }}</b>
+								<div class="footer">
+								<hr />
+								<div class="stats">
+									<i class="ti-arrow-right"></i>View
+								</div>
+							</div>
+						</a>
+						</div>
+					</div>
+				</div>				
+				<div class="col-lg-3 col-sm-6">
+					<div class="card">
+						<div class="content">
+							<div class="row">
+								<div class="col-xs-5">
+									<div class="icon-big icon-info text-center">
+										<i class="ti-id-badge"></i>
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<div class="numbers">
+										<p><strong>Officials</strong></p>									   
+									</div>
+								</div>
+							</div>
+							<a href="{{ url_for('officiallist') }}">
+								<b style = "font-size: 24px; color: green;">{{ off }}</b>
+								<div class="footer">
+								<hr />
+								<div class="stats">
+									<i class="ti-arrow-right"></i>View
+								</div>
+							</div>
+						</a>
+						</div>
+					</div>
+				</div>
+			<!--row begins-->
+				<div class="col-lg-3 col-sm-6">
+					<div class="card">
+						<div class="content">
+							<div class="row">
+								<div class="col-xs-5">
+									<div class="icon-big icon-success text-center">
+										<i class="ti-home"></i>
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<div class="numbers">
+										<p><strong>Chapters</strong></p>										
+									</div>
+								</div>
+							</div>
+							<a href="{{ url_for('chapterlist') }}">
+								<b style = "font-size: 24px; color: green;">{{ chap }}</b>
+								<div class="footer">
+								<hr />
+								<div class="stats">
+									<i class="ti-arrow-right"></i>View
+								</div>
+							</div>
+						</a>
+						</div>
+					</div>
+				</div>
+						</div>
+					</div>
+				</div>				
+			</div>		
+		</div>	
+	</div>
+  </div>
+  
+  <script>
+    
+  </script>
+
+</body>
+</html>
